@@ -69,15 +69,29 @@ if uploaded_file is not None:
 
     # Predict and display the result
     if st.button("Predict Behavior Class"):
-        prediction = model.predict(input_data_scaled)
+        prediction = model.predict(input_data_scaled)[0]
         
         # Display selected categories and their corresponding labels
         selected_device_model = device_model_mapping[input_data[0][0]]
         selected_os = operating_system_mapping[input_data[0][1]]
         selected_gender = gender_mapping[input_data[0][7]]
-        
-        st.write(f"Predicted User Behavior Class: {prediction[0]}")
+
+        # General statements based on prediction (customize as needed)
+        behavior_statements = {
+            0: "Low usage detected. Consider exploring more apps to enhance your experience.",
+            1: "Moderate usage detected. You're balancing your phone usage well.",
+            2: "High usage detected. Be mindful of your screen time for better well-being.",
+            3: "Excessive usage detected. It might be beneficial to take breaks from your device.",
+            4: "Critical usage level detected. Consider reducing your screen time significantly."
+        }
+
+        general_statement = behavior_statements.get(prediction, "No specific advice available.")
+
+        st.write(f"Predicted User Behavior Class: {prediction}")
         st.write(f"You selected:")
         st.write(f"Device Model: {selected_device_model} (Encoded: {input_data[0][0]})")
         st.write(f"Operating System: {selected_os} (Encoded: {input_data[0][1]})")
         st.write(f"Gender: {selected_gender} (Encoded: {input_data[0][7]})")
+        
+        # Display general statement regarding predicted behavior
+        st.write(general_statement)
