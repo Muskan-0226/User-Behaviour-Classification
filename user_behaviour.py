@@ -19,11 +19,6 @@ if uploaded_file is not None:
     # Load the dataset from the uploaded file
     data = pd.read_csv(uploaded_file)
 
-    # Display basic information about the dataset
-    st.write("### Dataset Overview")
-    st.dataframe(data.head())
-    st.write(data.describe())
-
     # Encode categorical features if needed
     label_encoders = {}
     categorical_columns = ['Device Model', 'Operating System', 'Gender']
