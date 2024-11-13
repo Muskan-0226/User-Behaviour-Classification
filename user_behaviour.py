@@ -29,23 +29,21 @@ if uploaded_file is not None:
             data[col] = label_encoders[col].fit_transform(data[col])
 
     # Create a mapping for displaying original labels
-    original_labels = {
-        'Device Model': dict(zip(label_encoders['Device Model'].classes_, range(len(label_encoders['Device Model'].classes_)))),
-        'Operating System': dict(zip(label_encoders['Operating System'].classes_, range(len(label_encoders['Operating System'].classes_)))),
-        'Gender': dict(zip(label_encoders['Gender'].classes_, range(len(label_encoders['Gender'].classes_))))
-    }
+    device_model_mapping = dict(enumerate(label_encoders['Device Model'].classes_))
+    operating_system_mapping = dict(enumerate(label_encoders['Operating System'].classes_))
+    gender_mapping = dict(enumerate(label_encoders['Gender'].classes_))
 
     # Define input fields for user data
     def user_input_features():
-        device_model = st.selectbox('Device Model', options=data['Device Model'].unique())  # Example categories
-        os = st.selectbox('Operating System', options=data['Operating System'].unique())  # Example categories
+        device_model = st.selectbox('Device Model', options=list(device_model_mapping.keys()), format_func=lambda x: device_model_mapping[x])
+        os = st.selectbox('Operating System', options=list(operating_system_mapping.keys()), format_func=lambda x: operating_system_mapping[x])
         app_usage_time = st.slider('App Usage Time (min/day)', min_value=30, max_value=600, step=10)
         screen_on_time = st.slider('Screen On Time (hours/day)', min_value=1.0, max_value=12.0, step=0.1)
         battery_drain = st.slider('Battery Drain (mAh/day)', min_value=300, max_value=3000, step=100)
         num_apps_installed = st.slider('Number of Apps Installed', min_value=10, max_value=100, step=5)
         data_usage = st.slider('Data Usage (MB/day)', min_value=100, max_value=2500, step=100)
         age = st.slider('Age', min_value=18, max_value=60, step=1)
-        gender = st.selectbox('Gender', options=data['Gender'].unique())  # Example categories
+        gender = st.selectbox('Gender', options=list(gender_mapping.keys()), format_func=lambda x: gender_mapping[x])
         
         # Convert input data into a dataframe
         input_data = {
@@ -74,12 +72,12 @@ if uploaded_file is not None:
         prediction = model.predict(input_data_scaled)
         
         # Display selected categories and their corresponding labels
-        selected_device_model = original_labels['Device Model'][device_model]
-        selected_os = original_labels['Operating System'][os]
-        selected_gender = original_labels['Gender'][gender]
+        selected_device_model = device_model_mapping[input_data[0][0]]
+        selected_os = operating_system_mapping[input_data[0][1]]
+        selected_gender = gender_mapping[input_data[0][7]]
         
         st.write(f"Predicted User Behavior Class: {prediction[0]}")
         st.write(f"You selected:")
-        st.write(f"Device Model: {selected_device_model} (Encoded: {device_model})")
-        st.write(f"Operating System: {selected_os} (Encoded: {os})")
-        st.write(f"Gender: {selected_gender} (Encoded: {gender})")
+        st.write(f"Device Model: {selected_device_model} (Encoded: {input_data[0][0]})")
+        st.write(f"Operating System: {selected_os} (Encoded: {input_data[0][1]})")
+        st.write(f"Gender: {selected_gender} (Encoded: {input_data[0][7]})")
