@@ -1,10 +1,4 @@
-pandas
-numpy
-scikit-learn
-matplotlib
-seaborn
-imbalanced-learn
 streamlit
+scikit-learn
 joblib
-xgboost
-lightgbm
+numpy
