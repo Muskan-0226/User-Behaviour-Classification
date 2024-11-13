@@ -123,7 +123,7 @@ print("Top Influential Features:")
 for idx in sorted_indices[:5]:  # top 5 features
     print(f"{feature_names[idx]}: {importances[idx]}")
 
-!pip install streamlit
+pip install streamlit
 
 # Save the model
 import joblib
