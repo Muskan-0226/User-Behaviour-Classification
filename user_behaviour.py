@@ -74,7 +74,11 @@ if uploaded_file is not None:
         # Display selected categories and their corresponding labels
         selected_device_model = device_model_mapping[input_data[0][0]]
         selected_os = operating_system_mapping[input_data[0][1]]
-        selected_gender = gender_mapping[input_data[0][7]]
+        
+        try:
+            selected_gender = gender_mapping[input_data[0][7]]
+        except KeyError:
+            selected_gender = "Unknown"
 
         # General statements based on prediction (customize as needed)
         behavior_statements = {
