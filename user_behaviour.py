@@ -28,6 +28,13 @@ if uploaded_file is not None:
             label_encoders[col] = LabelEncoder()
             data[col] = label_encoders[col].fit_transform(data[col])
 
+    # Create a mapping for displaying original labels
+    original_labels = {
+        'Device Model': dict(zip(label_encoders['Device Model'].classes_, range(len(label_encoders['Device Model'].classes_)))),
+        'Operating System': dict(zip(label_encoders['Operating System'].classes_, range(len(label_encoders['Operating System'].classes_)))),
+        'Gender': dict(zip(label_encoders['Gender'].classes_, range(len(label_encoders['Gender'].classes_))))
+    }
+
     # Define input fields for user data
     def user_input_features():
         device_model = st.selectbox('Device Model', options=data['Device Model'].unique())  # Example categories
@@ -52,6 +59,7 @@ if uploaded_file is not None:
             'Age': age,
             'Gender': gender
         }
+        
         return np.array(list(input_data.values())).reshape(1, -1)
 
     # Main function to get user input and predict behavior class
@@ -64,4 +72,14 @@ if uploaded_file is not None:
     # Predict and display the result
     if st.button("Predict Behavior Class"):
         prediction = model.predict(input_data_scaled)
+        
+        # Display selected categories and their corresponding labels
+        selected_device_model = original_labels['Device Model'][device_model]
+        selected_os = original_labels['Operating System'][os]
+        selected_gender = original_labels['Gender'][gender]
+        
         st.write(f"Predicted User Behavior Class: {prediction[0]}")
+        st.write(f"You selected:")
+        st.write(f"Device Model: {selected_device_model} (Encoded: {device_model})")
+        st.write(f"Operating System: {selected_os} (Encoded: {os})")
+        st.write(f"Gender: {selected_gender} (Encoded: {gender})")
