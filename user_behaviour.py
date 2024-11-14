@@ -92,7 +92,7 @@ if uploaded_file is not None:
         general_statement = behavior_statements.get(prediction, "No specific advice available.")
 
         st.write(f"Predicted User Behavior Class: {prediction}")
-        st.write(f"You selected:")
+        st.write("You selected:")
         st.write(f"Device Model: {selected_device_model} (Encoded: {input_data[0][0]})")
         st.write(f"Operating System: {selected_os} (Encoded: {input_data[0][1]})")
         st.write(f"Gender: {selected_gender} (Encoded: {input_data[0][7]})")
