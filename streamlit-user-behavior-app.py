@@ -49,7 +49,7 @@ else:
 
     # Define manual input fields for user data
     def user_input_features():
-        device_model = st.selectbox('Device Model', ['Model A', 'Model B', 'Model C'])  # Add specific model options as needed
+        device_model = st.selectbox('Device Model', ['Google Pixel 5', 'OnePlus 9', 'Xiaomi Mi 11', 'iPhone 12', 'Samsung Galaxy S21'])
         os = st.selectbox('Operating System', ['Android', 'iOS'])
         app_usage_time = st.slider('App Usage Time (min/day)', min_value=30, max_value=600, step=10)
         screen_on_time = st.slider('Screen On Time (hours/day)', min_value=1.0, max_value=12.0, step=0.1)
