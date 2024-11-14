@@ -86,7 +86,8 @@ if uploaded_file is not None:
             1: "Moderate usage detected. You're balancing your phone usage well.",
             2: "High usage detected. Be mindful of your screen time for better well-being.",
             3: "Excessive usage detected. It might be beneficial to take breaks from your device.",
-            4: "Critical usage level detected. Consider reducing your screen time significantly."
+            4: "Critical usage level detected. Consider reducing your screen time significantly.",
+            5: "No specific advice available for this behavior class."
         }
 
         # Handle cases where the predicted class is not in behavior_statements
