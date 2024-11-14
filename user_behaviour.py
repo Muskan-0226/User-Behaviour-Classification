@@ -89,8 +89,10 @@ if uploaded_file is not None:
             4: "Critical usage level detected. Consider reducing your screen time significantly."
         }
 
-        general_statement = behavior_statements.get(prediction, "No specific advice available.")
+        # Handle cases where the predicted class is not in behavior_statements
+        general_statement = behavior_statements.get(prediction, "No specific advice available for this behavior class.")
 
+        # Display prediction and general statement
         st.write(f"Predicted User Behavior Class: {prediction}")
         st.write("You selected:")
         st.write(f"Device Model: {selected_device_model} (Encoded: {input_data[0][0]})")
